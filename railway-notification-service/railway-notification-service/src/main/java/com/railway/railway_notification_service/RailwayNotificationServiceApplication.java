@@ -8,6 +8,7 @@ public class RailwayNotificationServiceApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(RailwayNotificationServiceApplication.class, args);
+	int i=10;
 	}
 
 }
