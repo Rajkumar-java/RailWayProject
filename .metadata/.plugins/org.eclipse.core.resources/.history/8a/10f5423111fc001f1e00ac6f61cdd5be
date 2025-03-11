@@ -1,0 +1,4 @@
+spring.application.name=railway-dashboard-service
+
+server.port:8010
+eureka.client.servies-url.defaultZone = http://localhost:8761/eureka

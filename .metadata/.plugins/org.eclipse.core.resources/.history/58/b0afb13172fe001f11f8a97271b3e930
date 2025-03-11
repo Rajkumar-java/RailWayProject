@@ -1,0 +1,31 @@
+package com.railway.railway_dashboard_service.Service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.railway.railway_dashboard_service.entity.KPI;
+
+@RestController
+@RequestMapping("/api/kpi")
+public class KIPController 
+{
+         
+	   private final KPIService kpiService;
+	   
+	   // Constructor injuctor 
+	   @Autowired
+	   public KIPController(KPIService kpiService)
+	   {
+		     this.kpiService = kpiService;
+	   }
+	   
+	   @GetMapping("/currentKPI")
+	   public KPI getCurrentKPI()
+	   {
+		   return kpiService.getCurrentKPI();
+	   }
+	   
+	   
+}

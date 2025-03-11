@@ -1,0 +1,20 @@
+package com.railway.railway_dashboard_service.exception;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.server.ResponseStatusException;
+
+@ControllerAdvice
+public class GlobleExceptionHandler 
+{
+	
+	    @ExceptionHandler(ResponseStatusException.class)
+        public ResponseEntity<Map<String, Onject>>(ResponseStatusException excep)
+        {
+        	Map<String, Object> errorResponse = new HashMap<String, Object>();
+        }
+}

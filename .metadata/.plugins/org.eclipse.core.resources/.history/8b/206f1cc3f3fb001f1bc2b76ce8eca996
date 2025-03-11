@@ -1,0 +1,5 @@
+spring.application.name=railway-ticked-booking-system-eureka-server
+
+#Eureka server Setting
+eureka.client.register-with = false
+eureka.client.fetch-register = false

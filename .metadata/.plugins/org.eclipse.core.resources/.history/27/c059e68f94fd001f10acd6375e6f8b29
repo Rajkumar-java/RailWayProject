@@ -1,0 +1,119 @@
+package com.railway.railway_dashboard_service.Service;
+
+import java.util.Optional;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+
+import com.railway.railway_dashboard_service.entity.KPI;
+import com.railway.railway_dashboard_service.repository.KPIRepository;
+
+import jakarta.transaction.Transactional;
+
+@Service
+public class KPIService  
+{
+	 private final Logger logger = LogManager.getLogger(KPIService.class);
+     private final KPIRepository kpiRepository;
+     
+     @Autowired
+     public KPIService(KPIRepository kpiRepository)
+     {
+    	     this.kpiRepository = kpiRepository;
+     }
+     
+     // Get Current KPI Data
+     @Cacheable(value = "kpichache", key = "#root.methodName")
+     public KPI getCurrentKPI()
+     {
+	    	 logger.info("Fetching the Most Reacent KPI Datas.....");
+	    	 KPI kpi = kpiRepository.findTopByOrderByIdDesc();
+	    	 
+	    	// If no KPI Data is found throw the custom Exception
+	    	 if(kpi == null)
+	    	 {
+	    		 logger.error("No KPI data Found In the database..");
+	    		 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No KPI Data Found");
+	    	 }
+	    	 logger.info("Succesfully retrive the kip datas {}", kpi);
+	    	 return kpi;
+     }
+     
+     @Transactional
+     public KPI saveKPI(KPI kpi)
+     {
+    	     logger.info("Saving new KPI datas{}", kpi);
+    	     // save KPI and return the Entity
+    	     KPI saveKPI = kpiRepository.save(kpi);
+    	     logger.info("save KPI succesfull with ID {}", saveKPI.getId());
+    	     
+    	     updateCache(saveKPI);
+    	     
+    	     return saveKPI;
+     }
+     
+     @CachePut(value = "kpicache", key = "#result.id") 
+	 private KPI updateCache(KPI kpi) 
+	 {
+
+		     return kpi;
+	 }
+     
+     public KPI updateKPI(Long id, KPI updateKPI)
+     
+     {
+    	    logger.info("update KPI data for id:{}", id);
+    	    Optional<KPI> existingKPIOptional = kpiRepository.findById(id);
+    	    if(existingKPIOptional.isEmpty())
+    	    {
+    	    	throw new ResponseStatusException(HttpStatus.NOT_FOUND, "KPI with id" + id + "not found");
+    	    }
+    	    
+    	    // get the existing KPI record
+    	    KPI existingKPI = existingKPIOptional.get();
+    	    {
+    	    	//update the field of the existing KPI new with the value
+    	    	existingKPI.setTotalBooking(updateKPI.getTotalBooking());
+    	    	existingKPI.setTotalRevenue(updateKPI.getTotalRevenue());
+    	    	existingKPI.setTotalCancellations(updateKPI.getTotalCancellations());
+    	    	existingKPI.setConversionRate(updateKPI.getConversionRate());
+    	    	existingKPI.setAverageBookingTime(updateKPI.getAverageBookingTime());
+    	    	existingKPI.setTrainOccupacencyrate(updateKPI.getTrainOccupacencyrate());;
+    	    	
+    	    	// save the update KPI
+    	    	KPI updateEnity = kpiRepository.save(existingKPI);
+    	    	logger.info("KPI update in Succusfully With ID:{}", id);
+    	    	
+    	    	// update cache the new KPI
+    	    	updateCache(updateEnity);
+    	    	return updateEnity;   	    	
+    	    }  	    
+       } 
+       
+       //Delete the KPI record By Id
+       @Transactional
+       public void deleteKPI(Long id)
+       {
+    	        logger.info("Deleting KPI with id {}", id);               
+    	        // Check If the KPI exists
+    	        if(!kpiRepository.existsById(id))
+    	        {
+    	        	throw new ResponseStatusException(HttpStatus.NOT_FOUND, "KPI with id" + id + "not found");
+    	        }
+    	        //Delete the KPI
+    	         kpiRepository.deleteById(id);
+    	         logger.info("KPI with id Delete succesfuilly", id);
+    	         
+    	         updateCache(null);   	        
+       }
+     
+}    
+    
+    
+

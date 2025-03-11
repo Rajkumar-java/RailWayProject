@@ -1,0 +1,18 @@
+package com.railway.railway_dashboard_service.entity;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "kpi")
+public class KPI 
+{
+       private Long id;
+       private Long totalBooking;
+       private Double totalRevenue;
+       private Double conversionRate;
+       private Long totalCancellations;
+       private Double averageBookingTime;
+       private Double trainOccupacencyrate;
+       
+}

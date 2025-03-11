@@ -1,0 +1,12 @@
+package com.railway.railway_dashboard_service.dto;
+
+
+public class KPIdto 
+{
+       private Long totalBooking;
+       private Double totalRevenue;
+       private Double conversionRate;
+       private Long totalCencellation;
+       private Double averageBookingtime;
+       private Double trainOccupancyRate;
+}

@@ -1,0 +1,25 @@
+package com.railway.railway_dashboard_service.Service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.railway.railway_dashboard_service.repository.KPIRepository;
+
+@Service
+public class KPIService  
+{
+     private final KPIRepository kpiRepository;
+     
+     @Autowired
+     public KPIService(KPIRepository kpiRepository)
+     {
+    	 this.kpiRepository = kpiRepository;
+     }
+     
+     // Get Current KPI Datas
+     public KPI getCurrentKPI()
+     {
+    	 KPI 
+     }
+     
+}

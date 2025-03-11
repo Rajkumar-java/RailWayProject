@@ -1,0 +1,5 @@
+package com.railway.railway_dashboard_service.configuration;
+
+public class CacheConfiguration {
+
+}

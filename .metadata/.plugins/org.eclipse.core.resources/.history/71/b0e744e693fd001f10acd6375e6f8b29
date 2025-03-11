@@ -1,0 +1,31 @@
+spring.application.name=railway-dashboard-service
+
+# Client Server Configuration
+server.port:8081
+eureka.client.service-url.defaultZone=http://localhost:8761/eureka
+
+# Database Configurations for (spring data jpa)
+spring.datasource.username=root
+spring.datasource.password=8610260354
+spring.datasource.url=jdbc:mysql://localhost:3306/RAILWAY
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+
+#Hiberante Configurations
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+
+#Logging Configuration
+logging.org.springframework=INFO
+logging.level.com.railway.dadhboard.service=DEBUG
+logging.org.hibernate=ERROR
+logging.file.name.logs/railway_dashboard.log
+
+# Enable Transection Management
+spring.transaction.default-timeout=60
+
+#Actuator Configuration
+management.endpoind.web.exposure.include=health,info,metric
+management.endpoints.web.base-path=/actuator
+management.endpoind.health.show-details=always
+management.endpoind.health.enable=true

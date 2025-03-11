@@ -1,0 +1,32 @@
+package com.railway.railway_dashboard_service.controller;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.railway.railway_dashboard_service.Service.KPIService;
+
+@RestController
+@RequestMapping("/api/kpi")
+public class KPIController 
+{
+	  // Logger track the activities the KPI Service Layer
+      private final Logger logger = LogManager.getLogger(KPIController.class);
+     
+      // inject the KPIService for handle the bussess Logic
+      private final KPIService kpiService;
+      
+      // COnstructor injection for loosely couple
+      @Autowired
+      public KPIController (KPIService kpiService)
+      {
+    	  this.kpiService = kpiService;
+      }
+      
+      public KPI getCurrentKPI()
+      {
+    	    
+      }
+}

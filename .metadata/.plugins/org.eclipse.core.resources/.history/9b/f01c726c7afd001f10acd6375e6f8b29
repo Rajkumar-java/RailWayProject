@@ -1,0 +1,33 @@
+package com.railway.railway_dashboard_service.Service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+
+import com.railway.railway_dashboard_service.entity.KPI;
+import com.railway.railway_dashboard_service.repository.KPIRepository;
+
+@Service
+public class KPIService  
+{
+     private final KPIRepository kpiRepository;
+     
+     @Autowired
+     public KPIService(KPIRepository kpiRepository)
+     {
+    	 this.kpiRepository = kpiRepository;
+     }
+     
+     // Get Current KPI Datas
+     public KPI getCurrentKPI()
+     {
+    	 KPI kpi = kpiRepository.findTopByOrderByIdDecs();
+    	 if(kpi == null)
+    	 {
+    		 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No KPI Data Found");
+    	 }
+    	 return kpi;
+     }
+     
+}

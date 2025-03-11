@@ -1,0 +1,13 @@
+package com.railway.railway_dashboard_service;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class RailwayDashboardServiceApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(RailwayDashboardServiceApplication.class, args);
+	}
+
+}
