@@ -1,0 +1,20 @@
+package com.railway.railway_dashboard_service.Service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.railway.railway_dashboard_service.repository.NotificationRepository;
+
+@Service
+public class NotificationService 
+{
+	   // 
+       private final NotificationRepository notificationRepository;
+       
+       @Autowired
+       // Constructor Injection for loosely coupling
+       public NotificationService(NotificationRepository notificationRepository)
+       {
+    	   this.notificationRepository = notificationRepository;
+       }
+}

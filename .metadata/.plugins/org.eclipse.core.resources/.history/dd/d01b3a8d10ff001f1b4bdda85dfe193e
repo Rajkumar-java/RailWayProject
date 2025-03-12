@@ -1,0 +1,52 @@
+package com.railway.railway_dashboard_service.Service;
+import java.util.List;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.railway.railway_dashboard_service.dto.NotificationDTO;
+import com.railway.railway_dashboard_service.entity.Notifications;
+import com.railway.railway_dashboard_service.repository.NotificationRepository;
+
+@Service
+public class NotificationService 
+{
+	   private final Logger logger = LogManager.getLogger(NotificationService.class);
+	   // inject the repository for database intraction		   
+       private final NotificationRepository notificationRepository;
+       
+       @Autowired
+       // Constructor Injection for loosely coupling
+       public NotificationService(NotificationRepository notificationRepository)
+       {
+    	   this.notificationRepository = notificationRepository;
+       }
+       
+       //create or update Notification
+       public NotificationDTO saveNotification(NotificationDTO notificationDTO)
+       {
+    	   Notifications notification = new Notifications();
+       {   
+    	   notificationDTO.getId();
+    	   notificationDTO.getMessage();
+    	   notificationDTO.getReadStatus();
+    	   notificationDTO.getTimeStamp();
+    	   notificationDTO.getAlerTime();
+    	   notificationDTO.getUserConduct();   
+       };
+          notificationRepository.save(notification);
+          logger.info("Notification save {}",notification);
+          return new NotificationDTO(notificationDTO.getId(),notificationDTO.getMessage(), notificationDTO.getReadStatus(), notificationDTO.getTimeStamp(), notificationDTO.getAlerTime(), notificationDTO.getUserConduct());
+        		  
+       }
+       
+       //get all Notification 
+       public List<Notifications> getAllNotification()
+       {
+    	    List<Notifications> notifications = notificationRepository.findAll();
+    	    notifications.stream().m
+    	    return null;
+       }
+}

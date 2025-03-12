@@ -18,7 +18,37 @@ public class GlobalExceptionHandler {
 
     private static final Logger logger = LogManager.getLogger(GlobalExceptionHandler.class);
 
-    // Handle ResponseStatusException (Custom exceptions)
+    // Handle KPI Not Found Exception
+    @ExceptionHandler(KPINotFoundException.class)
+    public ResponseEntity<Map<String, Object>> handleKPINotFoundException(KPINotFoundException ex) {
+        logger.error("KPI Not Found: {}", ex.getMessage());
+
+        Map<String, Object> errorResponse = new HashMap<>();
+        errorResponse.put("timestamp", LocalDateTime.now());
+        errorResponse.put("status", HttpStatus.NOT_FOUND.value());
+        errorResponse.put("error", "KPI Not Found");
+        errorResponse.put("message", ex.getMessage());
+        errorResponse.put("errorCode", "KPI_NOT_FOUND");
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
+
+    // Handle Notification Not Found Exception
+    @ExceptionHandler(NotificationNotFoundException.class)
+    public ResponseEntity<Map<String, Object>> handleNotificationNotFoundException(NotificationNotFoundException ex) {
+        logger.error("Notification Not Found: {}", ex.getMessage());
+
+        Map<String, Object> errorResponse = new HashMap<>();
+        errorResponse.put("timestamp", LocalDateTime.now());
+        errorResponse.put("status", HttpStatus.NOT_FOUND.value());
+        errorResponse.put("error", "Notification Not Found");
+        errorResponse.put("message", ex.getMessage());
+        errorResponse.put("errorCode", "NOTIFICATION_NOT_FOUND");
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
+
+    // Handle ResponseStatusException (for custom status responses)
     @ExceptionHandler(ResponseStatusException.class)
     public ResponseEntity<Map<String, Object>> handleResponseStatusException(ResponseStatusException ex) {
         logger.error("ResponseStatusException - Status: {}, Reason: {}", ex.getStatusCode(), ex.getReason());
